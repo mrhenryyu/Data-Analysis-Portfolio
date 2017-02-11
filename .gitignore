@@ -56,3 +56,12 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+# Json files 
+Kaggle TwoSigma Competition/train.json
+Kaggle TwoSigma Competition/test.json
+

@@ -65,3 +65,7 @@ target/
 Kaggle TwoSigma Competition/train.json
 Kaggle TwoSigma Competition/test.json
 
+
+Kaggle TwoSigma Competition/train\.json\.zip
+
+Kaggle TwoSigma Competition/sample_submission\.csv\.zip

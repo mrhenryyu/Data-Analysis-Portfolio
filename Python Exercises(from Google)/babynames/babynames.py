@@ -47,10 +47,43 @@ def extract_names(filename):
   names = []
   f = open(filename, 'rU')
   text = f.read()
+  
+  # find the year
+  match = re.search('(\d\d\d\d)(</h3>)', text)
+  if not match:
+    # We didn't find a year, so we'll exit with an error message.
+    sys.stderr.write('Couldn\'t find the year!\n')
+    sys.exit(1)
 
-  print text
-  sys.exit(0)
-  return
+  year = match.group(1)
+  names.append(year)
+  
+
+  
+  # extract names and rank numbers and print 
+  rankings = re.findall('<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', text)
+  # print rankings
+
+  # note that the boyname rankings and the girlname rankings are NOT YET in there
+  names_rank = {}
+  
+  # unpack the tuple and put it in the dictionary
+  for triple in rankings:
+    (rank, boyname, girlname) = triple
+    if boyname not in names_rank:
+      names_rank[boyname] = rank
+    if girlname not in names_rank:
+      names_rank[girlname] = rank
+
+  # sort the dictionary by alphabetical order
+  sorted_names = sorted(names_rank.keys())
+  
+  for name in sorted_names:
+    names.append(name + " " + names_rank[name])
+
+  #print names
+  
+  return names
 
 
 def main():
@@ -69,7 +102,24 @@ def main():
     summary = True
     del args[0]
   print args
-  extract_names('baby1990.html')
+
+  # now change it so that we actually use the filename
+
+  for filename in args:
+    names = extract_names(filename)
+
+    # make text summary file
+    text = '\n'.join(names) + '\n'
+    print text
+    # now print into a text file
+    f = open(filename + '.txt' , 'w')
+    f.write(text)
+    f.close()
+  
+  # use the list to print into a reasonable summary text
+
+  
+
   
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
